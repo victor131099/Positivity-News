@@ -58,3 +58,20 @@ SENTIMENT_APIKEY
 The first 3 are to allow for the application to connect to the MySQL database, and the last two are API keys from the `newscatcher` API and Google's Cloud Natural Language API key. 
 
 Once those are set as environment variables, run the `main` method in `src/main/java/com/elec5619/positivity/PositivityApplication.java`
+
+## Code:
+
+Most of backend code is stored in Positivity-News/Positivity-ELEC5619/src/main/java/com/elec5619/positivity/. This application follow the MVC architecture. 
+
+Model; 
+* domain folder that create and define objects
+* repository folder: contain interfaces of model
+Controller:
+* controller folder contain logic
+Other folders:
+* utils: Other package may be used
+* forms folder: contain forms 
+
+Most of frontend code (View) is stored in Positivity-News/Positivity-ELEC561/src/resources. 
+
+
