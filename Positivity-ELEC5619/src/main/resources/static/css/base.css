@@ -1,0 +1,134 @@
+.text {
+    color: #3C3A45; !important
+    font-family:'Nunito Sans', sans-serif; !important
+}
+
+.text-lg {
+    color: #DFE8F5  !important;
+    font-family:'Nunito Sans', sans-serif  !important;
+}
+
+.text-title {
+    color: #ffffff !important;
+    font-family:'Nunito Sans', sans-serif  !important;
+    font-size: 36px;
+    margin-top: 40px !important;
+}
+
+.text-subtitle {
+    color: #3C3A45 !important;
+    font-family:'Nunito Sans', sans-serif  !important;
+    font-size: 24px;
+    margin-top: 32px !important;
+}
+
+.bg-lg {
+    background-color: #DFE8F5 !important;
+}
+
+.bg-dk {
+    background-color: #3C3A45 !important;
+}
+
+.log {
+    background-color: #3C3A45 !important;
+
+}
+
+.bg-wh {
+    background-color: #F3F8FF !important;
+}
+
+.bg-card {
+    background-color: #F3F8FF;
+}
+
+.btn-bg {
+    background-color: #3C3A45 !important;
+}
+
+.btn-ac {
+    background-color: #D1DBFE !important;
+}
+
+.scrollbar {
+    overflow-y: auto;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    height: 100vh;
+}
+
+.text-field {
+    background-color: #DFE8F5 !important;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.ds-text {
+    color: #3C3A45;
+    font-family:'Nunito Sans', sans-serif !important;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.error {
+    width: 100% !important;
+    margin-top: .25rem !important;
+    font-size: .875em !important;
+    color: #dc3545 !important;
+}
+
+
+div#map {
+    /*height: 798px;*/
+    /*margin-left: 300px;*/
+    /*width: 600px;*/
+    /*overflow: auto;*/
+    /* The width is the width of the web page */
+ }
+
+#storyCard {
+    cursor: pointer;
+}
+
+/*input::placeholder {*/
+/*    font-size: 24px;*/
+/*}*/
+
+
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.round-lg {
+    border-radius: 10px !important;
+}
+
+.fp {
+    height: 100% !important;
+}
+
+.loader{
+    width:40px;
+    height:40px;
+    background:0 0;
+    border:6px solid transparent;
+    border-top-color:#3C3A45;
+    border-left-color:#3C3A45;
+    border-radius:50%;
+    animation:loader .75s 30 ease forwards
+}
+
+@keyframes loader{100%{transform:rotate(360deg)}}

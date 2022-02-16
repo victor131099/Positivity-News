@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/css/base.css" th:href="@{/css/base.css}">
+  <link rel="stylesheet" href="../static/css/preferences.css" th:href="@{/css/preferences.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <title>Preferences</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+  <link rel="icon" th:href="@{/images/icons/newspaper.svg}" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+          crossorigin=""></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"/>
+</head>
+<body class="bg-lg">
+<div class="container-fluid h-100 p-0 m-0 bg-lg">
+  <div class="row h-100 m-0 p-0 w-100">
+    <div th:include="homepage :: sidebar" class="m-0 p-0 h-100 col-2 bg-dk"></div>
+    <div class="m-0 h-100 ps-5 px-5 pt-4 pb-4 col-10">
+      <div class="container mw-100 bg-dk round-lg">
+        <p class="text-title text-center pt-4">Preferences</p>
+        <div class="pb-4 pt-0">
+          <ul class="nav nav-tabs nav-justified px-0 round-lg pt-0" id="preferencesTab" role="tablist">
+            <li class="nav-item round-lg pt-0" role="presentation">
+              <button class="text-title nav-link mt-0" id="topics-tab" data-bs-toggle="tab" data-bs-target="#topics" type="button" role="tab" aria-controls="topics" aria-selected="true">Topics</button>
+            </li>
+            <li class="nav-item pt-0" role="presentation">
+              <button class="text-title nav-link active mt-0" id="regions-tab" data-bs-toggle="tab" data-bs-target="#regions" type="button" role="tab" aria-controls="regions" aria-selected="false">Regions</button>
+            </li>
+            <li class="nav-item pt-0" role="presentation">
+              <button class="text-title nav-link mt-0" id="outlets-tab" data-bs-toggle="tab" data-bs-target="#outlets" type="button" role="tab" aria-controls="outlets" aria-selected="false">Outlets</button>
+            </li>
+          </ul>
+          <div class="tab-content h-100 bg-card" id="preferencesContent">
+            <div class="tab-pane fade " id="topics" role="tabpanel" aria-labelledby="topics-tab">
+              <div class="container">
+                <div class="row">
+                  <br>
+                  <P class="text-subtitle text-center col pt-10">All Topics</P>
+                  <p class="text-subtitle text-center col pt-10">My Topics</p>
+                  <br>
+                </div>
+                <div class="row" id="shared-lists">
+                  <div class= "col">
+                    <div class="container list-container">
+                      <div class="list-group ", id="alltopics">
+                        <br>
+                        <div th:each="topic: ${allTopics}">
+                          <div class="list-group-item" th:text="${topic.topic_name}"></div>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class = "col">
+                    <div class="container list-container">
+                      <br>
+                      <form id="topic-form">
+                        <div class="list-group text", id="mytopics">
+                          <div th:each="topic: ${myTopics}">
+                            <div class="list-group-item tinted" th:text="${topic.topic_name}"></div>
+                          </div>
+                        </div>
+                      </form>
+                      <br>
+                    </div>
+                    <br>
+                    <button form="topic-form" type="submit" class="w-100 btn btn-ac shadow-sm">Save Preferences</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <br>
+                  <br>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show active" id="regions" role="tabpanel" aria-labelledby="regions-tab">
+              <div class="row w-100">
+                <div class="col-9 mb-4">
+                  <div id="map" class="w-100 mt-4 ms-4" style="height: 800px;"></div>
+                </div>
+
+                <div class="col-3 ps-5 mx-auto mt-4 mb-4">
+                  <p class="text text-center mt-0 mb-0 pt-0" style="font-size: 24px;">Selected Countries</p>
+                  <div id="selected-table" class="mb-3 scrollbar" style="height: 710px">
+                    <span class="container" data-ng-app="myApp" data-ng-controller="myCtrl"></span>
+                    <div class="card" th:each="region: ${regions}">
+                      <div class="card-body">
+                        <span th:text="${region}"></span>
+                      </div>
+                    </div>
+                    <div data-pagination="" data-num-pages="numPages()" data-current-page="currentPage" data-max-size="maxSize" data-boundary-links="true"></div>
+                  </div>
+                  <a href="/preferences">
+                      <button type="button" class="btn btn-ac w-100">Save Preferences</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="outlets" role="tabpanel" aria-labelledby="outlets-tab">
+              <div class="container" >
+                <div class="row" >
+                  <br>
+                  <P class="text-subtitle text-center col pt-10">All Outlets</P>
+                  <p class="text-subtitle text-center col pt-10">My Outlets</p>
+                  <br>
+                </div>
+                <div class="row" id="shared-lists">
+
+                  <div class= "col">
+                    <div class="container list-container">
+                      <div class="list-group ", id="alloutlets">
+                        <br>
+                        <div th:each="outlet: ${allOutlets}">
+                          <div class="list-group-item" th:text="${outlet.outlet_name}"></div>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class = "col">
+                    <div class="container list-container">
+                      <br>
+                      <form id="outlet-form">
+                        <div class="list-group text", id="myoutlets">
+                          <div th:each="outlet: ${myOutlets}">
+                            <div class="list-group-item tinted" th:text="${outlet.outlet_name}"></div>
+                          </div>
+                        </div>
+                      </form>
+                      <br>
+                    </div>
+                    <br>
+                    <button form="outlet-form" type="submit" class="w-100 btn btn-ac shadow-sm">Save Preferences</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <br>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
+<script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+<script src="" th:src="@{/js/topicPreferences.js}"></script>
+<script src="" th:src="@{/js/regionPreferences.js}"></script>
+<script src="" th:src="@{/js/outletPreferences.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+</body>
+</html>

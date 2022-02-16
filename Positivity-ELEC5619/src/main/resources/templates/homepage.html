@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/css/base.css" th:href="@{/css/base.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+  <title>Home</title>
+  <link rel="icon" th:href="@{/images/icons/newspaper.svg}" type="image/x-icon">
+</head>
+<body class="bg-lg" onload="preferenceStories()">
+<div class="container-fluid h-100 p-0 m-0 bg-lg">
+  <div class="row h-100 m-0 p-0 w-100">
+    <div th:fragment="sidebar" class="m-0 p-0 h-100 col-2 bg-dk">
+      <ul class="text-center navbar-nav">
+        <br>
+        <p class="fw-bold text-lg mb-0 ds-text" style="font-size: 60px; padding-top: 0px;">positivity </p>
+        <p class = "text-lg" style="font-size: 35px; padding-top: 0px;"> news for the soul</p>
+        <br>
+        <li class="nav-item">
+          <div class="row mb-3">
+            <a class="nav-link text-lg m-0 p-0" style="font-size: 35px;" href="/home"><i class="bi bi-house-door"></i> Home</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="row mb-3">
+            <a class="nav-link text-lg m-0 p-0" style="font-size: 35px;" href="/preferences"><i class="bi bi-sliders"></i> Preferences</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="row mb-3">
+            <a class="nav-link text-lg m-0 p-0" style="font-size: 35px; border: none;" href="/history"><i class="bi bi-clock-history"></i> History</a>
+          </div>
+        </li>
+        </li>
+        <li class="nav-item">
+          <div class="row mb-3">
+            <a class="nav-link text-lg m-0 p-0" style="font-size: 35px;" href="/settings"><i class="bi bi-gear"></i> Settings</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="row mb-3">
+            <form action="#" th:action="@{/logout}" method="post">
+              <button class="btn text-lg btn-dark mx-0 p-0" type="submit" style="font-size: 35px; background-color: #3C3A45; border-color: #3C3A45"><i class="bi bi-power"></i> Sign Out</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id = stories class="m-0 h-100 ps-5 col-7 scrollbar"></div>
+
+    <div th:fragment="searchform" class="col-3 px-5 pt-3">
+      <div class="text-center card bg-wh shadow-sm">
+        <br>
+        <p class="text" style="font-size: 36px;">I'm looking for...</p>
+          <form id="searchForm" th:object="${searchForm}" onsubmit="return false;">
+            <div class="form-floating w-75 mx-auto mb-3">
+              <input type="text" class="text-field form-control" th:field="*{keywords}" id="keywords" placeholder="test">
+              <label for="keywords">Keywords</label>
+            </div>
+          <div class="form-floating w-75 mx-auto mb-3">
+            <select class="text-field form-select"  th:field="*{topic}"  id="topic">
+              <option selected th:value=null></option>
+              <tr th:each="topic: ${topics}">
+              <option th:text="${topic}" th:value="${topic}"></option>
+              </tr>
+            </select>
+            <label for="topic">Topic</label>
+          </div>
+          <div class="form-floating w-75 mx-auto mb-3">
+            <select class="text-field form-select"  th:field="*{region}"  id="region">
+              <option selected th:value=null></option>
+              <tr th:each="region: ${regions}">
+                <option th:text="${region}" th:value="${region}"></option>
+              </tr>
+            </select>
+            <label for="region">Region</label>
+          </div>
+          <div class="form-floating w-75 mx-auto mb-3">
+            <select class="text-field form-select"  th:field="*{outlet}"   id="outlet">
+              <option selected th:value=null></option>
+              <tr th:each="outlet: ${outlets}">
+                <option th:text="${outlet}" th:value="${outlet}"></option>
+              </tr>
+            </select>
+            <label for="outlet">Outlet</label>
+          </div>
+          <div class="form-floating w-75 mx-auto mb-3">
+            <select class="text-field form-select"  th:field="*{language}"  id="language">
+              <option selected th:value=null></option>
+              <tr th:each="language: ${languages}">
+                <option th:text="${language}" th:value="${language}"></option>
+              </tr>
+            </select>
+            <label for="language">Language</label>
+          </div>
+          <div class="form-floating w-75 mx-auto mb-3">
+            <select class="text-field form-select"  th:field="*{orderBy}"  id="order_by">
+              <option th:value="relevance">Most Relevant</option>
+              <option th:value="date">Newest</option>
+            </select>
+            <label for="order_by">Order By</label>
+          </div>
+          <button type="submit" value="Submit" class="btn btn-ac shadow-sm mb-3 me-5">Submit</button>
+          <button type="button" name="reset" value="Reset" id="clearFilters" onclick="customReset();" class="btn bg-lg shadow-sm mb-3 ms-5">Clear Filters</button>
+
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var sentimentAPIKey =[[${sentimentAPIKey}]];
+  /*]]>*/
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/homepage.js}"></script>
+
+</body>
+</html>

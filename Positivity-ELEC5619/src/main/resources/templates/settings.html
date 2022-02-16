@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/css/base.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+    <title>Settings</title>
+    <link rel="icon" th:href="@{/images/icons/newspaper.svg}" type="image/x-icon">
+</head>
+<body class="bg-lg">
+    <div class="container-fluid h-100 p-0 m-0 bg-lg">
+        <div class="row h-100 m-0 p-0 w-100">
+        <div th:include="homepage :: sidebar" class="m-0 p-0 h-100 col-2 bg-dk"></div>
+        <div class="m-0 h-100 ps-5 col-7 scrollbar">
+            <div class="card bg-wh shadow-sm mt-4">
+                <center>
+                <form class="form-horizontal" action="#" th:action="@{/settings}" th:object="${settingsForm}" method="post">
+                    <fieldset>
+                        <p class="text-subtitle" style="font-size: 36px;">Change User Details</p>
+                        <p class="text"> Only fill out fields you want to change and confirm current password.</p>
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Change First Name</label>
+                            <div class="col-md-4">
+                                <input id="firstname" type="text" th:field="*{firstName}" class="text-field form-control" aria-describedby="firstname-feedback" oninput="validateFirstName()">
+                            </div>
+                            <div id="firstname-feedback" class="invalid-feedback">
+                                Please enter a first name.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Change Last Name</label>
+                            <div class="col-md-4">
+                                <input id="lastname" type="text" th:field="*{lastName}" class="text-field form-control"  aria-describedby="lastname-feedback" oninput="validateLastName()">
+                            </div>
+                            <div id="lastname-feedback" class="invalid-feedback">
+                                Please enter a last name.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Change Email</label>
+                            <div class="col-md-4">
+                                <input id="email" type="email" th:field="*{email}" class="text-field form-control"  aria-describedby="email-feedback" oninput="validateEmail()">
+                                <div id="email-feedback" class="invalid-feedback">
+                                    Please enter a valid email.
+                                </div>
+                            </div>
+                            <div th:if="${emailError}" style="width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545;">
+                                This email is already associated with another account. Please try again.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Change Password</label>
+                            <div class="col-md-4">
+                                <input id="password" type="password" th:field="*{password}" class="text-field form-control" aria-describedby="password-feedback" oninput="validatePasswords()">
+                                <div id="password-feedback" class="invalid-feedback">
+                                    Your new password must be at least 8 characters long.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Confirm New Password</label>
+                            <div class="col-md-4">
+                                <input id="confirm" type="password" th:field="*{confirmPassword}" class="text-field form-control" aria-describedby="confirm-feedback" oninput="validatePasswords()">
+                                <div id="confirm-feedback" class="invalid-feedback">
+                                    Your new passwords must be valid and match.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text col-md-4 mb-1 mt-1 control-label">Verify Current Password <span style="color:red">*</span></label>
+                            <div class="col-md-4">
+                                <input id="oldPassword" type="password" th:field="*{oldPassword}" class="text-field form-control"  aria-describedby="current-password-feedback">
+                                <div id="current-password-feedback" class="invalid-feedback">
+                                    Your password must be at least 8 characters long.
+                                </div>
+                            </div>
+                            <div th:if="${currentPasswordError}" style="width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545;">
+                                This password is not your current password. Please try again.
+                            </div>
+                        </div>
+
+                        <div th:if="${currentSessionError}" style="width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545;">
+                            You are not currently signed in. Please try again.
+                        </div>
+
+                        <div th:if="${noMeaningfulChangeError}" style="width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545;">
+                            No new details were set. Please try again.
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 mb-1 mt-1 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" value="Submit" class="w-200 mb-5 btn btn-bg shadow-sm"><p class="m-0 text-white px-5" style="font-size:20px">Save changes</p></button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="" th:src="@{/js/settings.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+</body>
+</html>
